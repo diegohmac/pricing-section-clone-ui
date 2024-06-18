@@ -1,3 +1,4 @@
+import Pricing from '@/components/Pricing';
 import getData from '@/utils/api';
 
 export default async function Home() {
@@ -6,8 +7,8 @@ export default async function Home() {
   console.log({ data });
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      Hello World
+    <main className="flex min-h-screen flex-col items-center justify-between p-4 md:p-24 bg-[#05192d]">
+      <Pricing />
     </main>
   );
 }

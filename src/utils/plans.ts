@@ -1,4 +1,4 @@
-export const plans = [
+export const PLANS = [
     {
         title: 'Basic',
         description: 'Limited Access',
@@ -70,6 +70,10 @@ export const plans = [
             label: 'Set Up a Team',
             href: '#',
         },
+        tag: {
+            monthlyText: 'Special Price',
+            yearlyText: 'Special Price',
+        },
         features: [
             'Manage your group',
             'View learning activity and track progress',
@@ -109,4 +113,6 @@ export const plans = [
         link: undefined,
     },
 
-]
+] as const;
+
+export type Plan = typeof PLANS[number];
