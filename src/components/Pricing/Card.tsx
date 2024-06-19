@@ -17,7 +17,7 @@ type Props = {
   plan: Plan;
   index: number;
   previousPlanName?: string;
-  displayType: 'monthly' | 'yearly';
+  isYearly: boolean;
 };
 
 const roundedStyles: Record<string, string> = {
@@ -38,11 +38,10 @@ export default function Card({
   plan,
   previousPlanName,
   index,
-  displayType,
+  isYearly,
 }: Props) {
   const isHighlighted = !plan.price.text && plan.title === 'Premium';
-  const showFromPrice =
-    plan.price.from && (displayType === 'yearly' || !isHighlighted);
+  const showFromPrice = plan.price.from && (isYearly || !isHighlighted);
 
   return (
     <ShadcnCard
@@ -63,7 +62,7 @@ export default function Card({
               : '-top-3 bg-[rgb(217,217,225)]'
           )}
         >
-          {plan.tag.monthlyText}
+          {isYearly ? plan.tag.yearlyText : plan.tag.monthlyText}
         </div>
       )}
       {showFromPrice && (
@@ -93,17 +92,19 @@ export default function Card({
         >
           <p className="text-[#05192d] text-4xl font-bold">
             {plan.price.text || (
-              <span className="text-5xl">{`$${plan.price.monthly}`}</span>
+              <span className="text-5xl">{`$${isYearly ? plan.price.yearly : plan.price.monthly}`}</span>
             )}
           </p>
           {!plan.price.text && (
-            <div className="flex flex-col grow justify-end ml-2">
+            <div className="flex flex-col grow justify-end ml-2 self-end my-4">
               <p className="text-[#05192d] text-sm tracking-tighter">
                 {plan.price.monthlyInfo}
               </p>
-              <p className="text-[#05192d] text-sm tracking-tighter">
-                {plan.price.yearlyInfo}
-              </p>
+              {(!isHighlighted || isYearly) && (
+                <p className="text-[#05192d] text-sm tracking-tighter">
+                  {plan.price.yearlyInfo}
+                </p>
+              )}
             </div>
           )}
         </div>
