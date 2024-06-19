@@ -1,5 +1,5 @@
 
-const AVAILABLE_CURRENCIES = [
+export const AVAILABLE_CURRENCIES = [
     'USD',
     'GBP',
     'CAD',
@@ -10,20 +10,19 @@ const AVAILABLE_CURRENCIES = [
     'INR',
 ] as const;
 
-type AvailableCurrencies = typeof AVAILABLE_CURRENCIES[number];
+export type AvailableCurrencies = typeof AVAILABLE_CURRENCIES[number];
 
-type FxRates = {
+export type FxRates = {
     base: string;
     conversionRate: Record<AvailableCurrencies, number>
 }
 
 const API = `https://v6.exchangerate-api.com/v6/${process.env.EXCHANGE_API_KEY}/latest/USD`
 
-export default async function getData(): Promise<FxRates | void> {
+export default async function getData(): Promise<FxRates | null> {
     return fetch(API)
         .then((res) => res.json())
         .then((data) => {
-            data
             return {
                 base: data.base_code,
                 conversionRate: Object.keys(data.conversion_rates).reduce((acc, key) => {
@@ -34,5 +33,8 @@ export default async function getData(): Promise<FxRates | void> {
                 }, {} as FxRates['conversionRate'])
             }
         })
-        .catch((err) => console.log(err))
+        .catch((err) => {
+            console.log(err)
+            return null;
+        })
 }
