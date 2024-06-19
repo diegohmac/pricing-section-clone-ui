@@ -63,7 +63,7 @@ export default function Card({
   return (
     <ShadcnCard
       className={cn(
-        'w-full max-w-[450px] relative z-0',
+        'w-full max-w-[300px] relative z-0',
         isHighlighted
           ? 'shadow-elevate z-10 xl:-mt-6 xl:pt-4 border-t-8 border-t-[rgb(3,239,98)]'
           : 'border border-[rgb(217,217,225)]',
@@ -90,9 +90,9 @@ export default function Card({
         >
           <div className="relative flex items-center justify-center">
             <span className="text-[#626D79] text-2xl">
-              {formatter.format(+plan.price.from)}
+              {getConvertedPrice(plan.price.from)}
             </span>
-            <div className="absolute w-12 h-0.5 bg-orange-500 transform -rotate-12" />
+            <div className="absolute w-full h-0.5 bg-orange-500 transform -rotate-12" />
           </div>
         </div>
       )}
@@ -103,7 +103,7 @@ export default function Card({
       <CardContent>
         <div
           className={cn(
-            'flex items-center flex-wrap h-[72px] px-6',
+            'flex items-center h-[72px] px-6',
             !plan.price.text
               ? `${isHighlighted ? 'bg-[rgb(3,239,98)]' : 'bg-[rgb(217,217,225)]'}`
               : ''
@@ -142,7 +142,7 @@ export default function Card({
             {plan.features.map((feature) => (
               <li
                 key={feature}
-                className="flex items-center text-sm font-semibold"
+                className="flex items-start text-sm font-semibold"
               >
                 <Check className="w-4 h-4 mr-2 shrink-0" />
                 <span>{feature}</span>
